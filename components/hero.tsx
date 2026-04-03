@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Sparkles } from "lucide-react"
 
@@ -52,23 +53,25 @@ export function Hero() {
               Get a Demo
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
-            <Button size="lg" variant="outline" className="text-base px-8 bg-background/80 backdrop-blur-sm">
-              Explore Features
+            <Button size="lg" variant="outline" className="text-base px-8 bg-background/80 backdrop-blur-sm" asChild>
+              <Link href="/#features">Explore Features</Link>
             </Button>
           </div>
         </div>
 
         <div className="mt-16 relative">
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10 pointer-events-none" />
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border ring-1 ring-black/5 dark:ring-white/10">
-            <Image
-              src="/images/pos-dashboard.png"
-              alt="DigiRestro POS dashboard on desktop"
-              width={1536}
-              height={974}
-              className="w-full h-auto"
-              priority
-            />
+          <div className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl border border-border shadow-2xl ring-1 ring-black/5 dark:ring-white/10">
+            <div className="relative aspect-[1280/717] w-full bg-muted">
+              <Image
+                src="/images/hero-spotlight.webp"
+                alt="Guests enjoying food together at a restaurant"
+                width={1280}
+                height={717}
+                className="h-full w-full object-cover object-center"
+                priority
+              />
+            </div>
           </div>
         </div>
 
@@ -111,26 +114,6 @@ export function Hero() {
               </p>
             </div>
           </article>
-        </div>
-
-        <div className="mt-20">
-          <p className="text-center text-muted-foreground mb-8">
-            Trusted by <span className="font-semibold text-foreground">1000+</span> restaurant businesses
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-            {[
-              "Leo's Cafe",
-              "Renaissance Grand",
-              "Mashaal Club",
-              "Urban Theka",
-              "Begum's",
-              "Hungry Oven"
-            ].map((client) => (
-              <span key={client} className="text-foreground font-medium text-sm sm:text-base">
-                {client}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
     </section>
