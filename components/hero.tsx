@@ -95,14 +95,14 @@ export function Hero() {
 
         <div className="mt-16 space-y-10 sm:space-y-12">
           <HeroVisual
-            src="/images/hero-smart-automation-ai.png"
+            src="/images/hero-smart-automation-ai.jpg"
             alt="Smart automation: simplify POS orders with DigiRestro AI chatbot"
             width={1024}
             height={576}
             priority
           />
           <HeroVisual
-            src="/images/hero-ecosystem.png"
+            src="/images/hero-ecosystem.jpg"
             alt="DigiRestro restaurant technology ecosystem: QR ordering, online orders, POS, KDS, apps, and payments"
             width={1024}
             height={576}
