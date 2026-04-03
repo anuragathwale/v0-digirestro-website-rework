@@ -38,8 +38,8 @@ export function Footer() {
               <Image 
                 src="/images/digirestro-logo.webp" 
                 alt="DigiRestro" 
-                width={160} 
-                height={40}
+                width={156} 
+                height={32}
                 className="h-8 w-auto brightness-0 invert"
               />
             </Link>

@@ -25,7 +25,7 @@ const clients = [
 
 export function Clients() {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="py-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-muted/20 via-transparent to-transparent border-y border-border/50">
       <div className="max-w-7xl mx-auto">
         <h3 className="text-center text-muted-foreground mb-8 font-medium">
           Trusted by restaurants across the globe
