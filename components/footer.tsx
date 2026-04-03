@@ -36,11 +36,11 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center mb-4">
               <Image 
-                src="/images/digirestro-logo.jpg" 
+                src="/images/digirestro-logo.webp" 
                 alt="DigiRestro" 
-                width={150} 
+                width={160} 
                 height={40}
-                className="h-10 w-auto brightness-0 invert"
+                className="h-8 w-auto brightness-0 invert"
               />
             </Link>
             <p className="text-background/60 text-sm leading-relaxed">
