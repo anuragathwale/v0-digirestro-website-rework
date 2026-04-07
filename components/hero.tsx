@@ -53,10 +53,7 @@ export function Hero() {
                 <Image
                   src="/images/hero-illustration.png"
                   alt=""
-                  width={1024}
-                  height={700}
                   className="h-full w-full object-contain object-center drop-shadow-sm"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
                   priority
                 />
               </div>
