@@ -14,8 +14,6 @@ type FeatureItem = {
   /** Square or illustrated assets: show full artwork without harsh cropping */
   imageFit?: "cover" | "contain"
   imageBgClass?: string
-  /** User-provided raster: render with <img> + object-contain (see SUPPORT_ART) */
-  useNativeImage?: boolean
 }
 
 const features: FeatureItem[] = [
@@ -55,7 +53,6 @@ const features: FeatureItem[] = [
     alt: "Customer support services—24/7 support, remote assistance, technical help, and general inquiries",
     imageFit: "contain",
     imageBgClass: "bg-white",
-    useNativeImage: true,
   },
   {
     title: "Inventory management",
@@ -71,18 +68,20 @@ function FeatureMedia({ feature }: { feature: FeatureItem }) {
   const fit = feature.imageFit ?? "cover"
   const bg = feature.imageBgClass ?? ""
 
-  if (feature.useNativeImage) {
+  /** Square brand JPEG: flex + explicit Image dimensions avoids a collapsed image (blank tile). */
+  if (feature.image === SUPPORT_ART) {
     return (
-      <div className={`${box} ${bg} flex items-center justify-center`}>
-        {/* eslint-disable-next-line @next/next/no-img-element -- static brand illustration from /public */}
-        <img
-          src={feature.image}
-          alt={feature.alt}
+      <div
+        className={`${box} ${bg} flex items-center justify-center overflow-hidden px-3 py-2 sm:px-4 sm:py-3`}
+      >
+        <Image
+          src={SUPPORT_ART}
           width={1024}
           height={1024}
-          className="h-full w-full max-h-full object-contain object-center p-2 sm:p-3"
-          loading="lazy"
-          decoding="async"
+          alt={feature.alt}
+          sizes="(max-width: 768px) 90vw, 360px"
+          className="h-auto max-h-52 w-full max-w-full object-contain object-center sm:max-h-56 md:max-h-60"
+          unoptimized
         />
       </div>
     )
