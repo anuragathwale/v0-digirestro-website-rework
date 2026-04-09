@@ -1,8 +1,14 @@
 "use client"
 
 import Image from "next/image"
-import { CreditCard, Network } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { CreditCard, ChevronLeft, ChevronRight, Network } from "lucide-react"
+import { useRef } from "react"
+import type { Swiper as SwiperType } from "swiper"
+import { Autoplay, EffectCoverflow, Keyboard } from "swiper/modules"
+import { Swiper, SwiperSlide } from "swiper/react"
+
+import "swiper/css"
+import "swiper/css/effect-coverflow"
 
 /** Venue imagery — ImageKit from digirestro.ai for trusted restaurant brands */
 const VENUE_IMAGES = [
@@ -87,71 +93,78 @@ const restaurantCards = clients.map((name, i) => ({
   image: VENUE_IMAGES[i % VENUE_IMAGES.length]!,
 }))
 
-function RestaurantMarquee() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [isPaused, setIsPaused] = useState(false)
-
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-
-    const scrollWidth = container.scrollWidth
-    const clientWidth = container.clientWidth
-
-    if (scrollWidth <= clientWidth) return
-
-    let scrollPos = 0
-    const speed = 2
-
-    const scroll = () => {
-      if (!isPaused) {
-        scrollPos += speed
-        if (scrollPos >= scrollWidth - clientWidth) {
-          scrollPos = 0
-        }
-        container.scrollLeft = scrollPos
-      }
-    }
-
-    const animationId = setInterval(scroll, 30)
-    return () => clearInterval(animationId)
-  }, [isPaused])
+/** Matches digirestro.ai: Swiper coverflow (Divi Essential), autoplay 2s, centered, depth ~362, 3|1|1 breakpoints */
+function RestaurantCoverflowCarousel() {
+  const swiperRef = useRef<SwiperType | null>(null)
 
   return (
-    <div 
-      className="clients-carousel-wrapper w-full py-8 px-4"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
-      <div 
-        ref={containerRef}
-        className="flex gap-6 overflow-x-auto scroll-smooth pb-4"
-        style={{
-          scrollBehavior: "smooth",
-          minHeight: "220px",
+    <div className="clients-carousel-wrapper w-full px-2 py-6 sm:px-4">
+      <Swiper
+        className="!overflow-visible pb-2"
+        modules={[EffectCoverflow, Autoplay, Keyboard]}
+        effect="coverflow"
+        grabCursor={false}
+        centeredSlides
+        loop
+        speed={400}
+        keyboard={{ enabled: true }}
+        slidesPerView={1}
+        spaceBetween={24}
+        breakpoints={{
+          768: { slidesPerView: 1, spaceBetween: 32 },
+          1024: { slidesPerView: 3, spaceBetween: 50 },
+        }}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        coverflowEffect={{
+          rotate: 0,
+          stretch: 0,
+          depth: 362,
+          modifier: 1,
+          slideShadows: false,
+        }}
+        onSwiper={(instance) => {
+          swiperRef.current = instance
         }}
       >
         {restaurantCards.map((item, i) => (
-          <figure
-            key={`${item.name}-${i}`}
-            className="relative shrink-0 overflow-hidden rounded-xl border border-border bg-card shadow-lg hover:shadow-xl transition-shadow"
-            style={{
-              width: "260px",
-              height: "180px",
-            }}
-          >
-            <Image
-              src={item.image}
-              alt={item.name}
-              fill
-              className="object-cover"
-              unoptimized
-            />
-            <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent px-4 pb-4 pt-12">
-              <span className="line-clamp-2 text-sm font-semibold text-white">{item.name}</span>
-            </figcaption>
-          </figure>
+          <SwiperSlide key={`${item.name}-${i}`} className="!flex justify-center py-2">
+            <figure className="relative mx-auto h-[200px] w-full max-w-[280px] overflow-hidden rounded-xl border border-border bg-card shadow-lg transition-shadow sm:h-[210px] sm:max-w-[300px]">
+              <Image
+                src={item.image}
+                alt={item.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 90vw, 300px"
+                unoptimized
+              />
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent px-3 pb-3 pt-10 sm:px-4 sm:pb-4 sm:pt-12">
+                <span className="line-clamp-2 text-center text-sm font-semibold text-white">{item.name}</span>
+              </figcaption>
+            </figure>
+          </SwiperSlide>
         ))}
+      </Swiper>
+      <div className="mt-6 flex justify-center gap-10">
+        <button
+          type="button"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-sm transition hover:bg-muted"
+          aria-label="Previous restaurant"
+          onClick={() => swiperRef.current?.slidePrev()}
+        >
+          <ChevronLeft className="h-5 w-5" aria-hidden />
+        </button>
+        <button
+          type="button"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-sm transition hover:bg-muted"
+          aria-label="Next restaurant"
+          onClick={() => swiperRef.current?.slideNext()}
+        >
+          <ChevronRight className="h-5 w-5" aria-hidden />
+        </button>
       </div>
     </div>
   )
@@ -210,11 +223,7 @@ export function Clients() {
         <p className="mb-4 text-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
           Restaurants &amp; brands
         </p>
-        <p className="mb-6 text-center text-xs text-muted-foreground">
-          
-        </p>
-
-        <RestaurantMarquee />
+        <RestaurantCoverflowCarousel />
       </div>
     </section>
   )
