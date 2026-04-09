@@ -2,14 +2,13 @@
 
 import Image from "next/image"
 import { CreditCard, ChevronLeft, ChevronRight, Network } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useRef } from "react"
+import type { Swiper as SwiperClass } from "swiper"
+import { Autoplay, EffectCoverflow } from "swiper/modules"
+import { Swiper, SwiperSlide } from "swiper/react"
 
-import {
-  type CarouselApi,
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel"
+import "swiper/css"
+import "swiper/css/effect-coverflow"
 
 /** Venue imagery — ImageKit from digirestro.ai for trusted restaurant brands */
 const VENUE_IMAGES = [
@@ -94,143 +93,78 @@ const restaurantCards = clients.map((name, i) => ({
   image: VENUE_IMAGES[i % VENUE_IMAGES.length]!,
 }))
 
-const SLIDE_COUNT = restaurantCards.length
-
-/** Shortest distance between indices on a looping strip (for staircase scaling). */
-function loopDistance(i: number, selected: number, n: number) {
-  const d = Math.abs(i - selected)
-  return Math.min(d, n - d)
-}
-
-/** Signed offset from selected (-n/2 … n/2) for rotateY: left negative, right positive. */
-function loopOffset(i: number, selected: number, n: number) {
-  let diff = i - selected
-  if (diff > n / 2) diff -= n
-  if (diff < -n / 2) diff += n
-  return diff
-}
-
-/** Center slide larger; each step away smaller + slight Y-rotation (staircase / coverflow-style). */
-function slideStaircaseStyle(index: number, selectedIndex: number) {
-  const dist = loopDistance(index, selectedIndex, SLIDE_COUNT)
-  const offset = loopOffset(index, selectedIndex, SLIDE_COUNT)
-  const scale = Math.max(0.62, 1.1 - dist * 0.11)
-  const opacity = Math.max(0.42, 1 - dist * 0.16)
-  const rotateY = Math.max(-14, Math.min(14, -offset * 5))
-  const zIndex = 30 - dist
-
-  return {
-    zIndex,
-    opacity,
-    transform: `perspective(1100px) rotateY(${rotateY}deg) scale(${scale})`,
-    transition: "transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.35s ease",
-    transformOrigin: "center center" as const,
-    willChange: "transform, opacity" as const,
-  }
-}
-
 /**
- * All partner cards are in the loop (see `restaurantCards`). Autoplay runs continuously;
- * pause only while pointer is over the track (not the arrow row) so rotation is obvious.
+ * Digirestro.ai uses Divi + Swiper coverflow: centeredSlides, loop, autoplay 2s, speed 400,
+ * spacing 50, cover depth 362, breakpoints 3|1|1. Image is full-bleed; title sits below (same structure as their markup).
  */
 function RestaurantPartnersCarousel() {
-  const [api, setApi] = useState<CarouselApi>()
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const [pauseAutoplay, setPauseAutoplay] = useState(false)
-
-  useEffect(() => {
-    if (!api) return
-    const sync = () => {
-      const next = api.selectedScrollSnap()
-      setSelectedIndex((prev) => (prev === next ? prev : next))
-    }
-    sync()
-    api.on("select", sync)
-    api.on("reInit", sync)
-    let raf = 0
-    const onScroll = () => {
-      if (raf) return
-      raf = requestAnimationFrame(() => {
-        raf = 0
-        sync()
-      })
-    }
-    api.on("scroll", onScroll)
-    return () => {
-      api.off("select", sync)
-      api.off("reInit", sync)
-      api.off("scroll", onScroll)
-    }
-  }, [api])
-
-  useEffect(() => {
-    if (!api || pauseAutoplay) return
-    const id = window.setInterval(() => {
-      api.scrollNext()
-    }, 2200)
-    return () => window.clearInterval(id)
-  }, [api, pauseAutoplay])
+  const swiperRef = useRef<SwiperClass | null>(null)
 
   return (
-    <div className="clients-carousel-wrapper w-full px-2 py-6 sm:px-4">
-      <div
-        className="relative px-4 sm:px-10 md:px-14"
-        onPointerEnter={() => setPauseAutoplay(true)}
-        onPointerLeave={() => setPauseAutoplay(false)}
-      >
-        <Carousel
-          setApi={setApi}
-          opts={{
-            loop: true,
-            align: "center",
-            duration: 35,
-            skipSnaps: false,
+    <div className="clients-carousel-wrapper w-full">
+      <div className="partners-swiper-wrap relative mx-auto w-full max-w-7xl">
+        <Swiper
+          className="partners-swiper w-full py-6"
+          modules={[EffectCoverflow, Autoplay]}
+          effect="coverflow"
+          grabCursor
+          centeredSlides
+          loop
+          loopAdditionalSlides={3}
+          watchSlidesProgress
+          speed={400}
+          slidesPerView={1}
+          spaceBetween={24}
+          breakpoints={{
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 50,
+            },
           }}
-          className="w-full"
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          coverflowEffect={{
+            rotate: 0,
+            stretch: 0,
+            depth: 362,
+            modifier: 1,
+            slideShadows: false,
+          }}
+          onSwiper={(instance) => {
+            swiperRef.current = instance
+          }}
         >
-          <CarouselContent className="-ml-3 items-center md:-ml-4">
-            {restaurantCards.map((item, i) => (
-              <CarouselItem
-                key={`${item.name}-${i}`}
-                className="pl-3 md:pl-4 basis-[78%] sm:basis-[48%] md:basis-[38%] lg:basis-[30%] xl:basis-[26%]"
-              >
-                <div
-                  className="relative mx-auto w-full max-w-[340px]"
-                  style={slideStaircaseStyle(i, selectedIndex)}
-                >
-                  <figure className="relative w-full overflow-hidden rounded-xl border border-border bg-card shadow-lg ring-1 ring-black/5">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      width={400}
-                      height={300}
-                      className="aspect-[4/3] h-auto w-full object-cover"
-                      sizes="(max-width: 640px) 78vw, (max-width: 1024px) 38vw, 30vw"
-                      unoptimized
-                    />
-                    <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent px-3 pb-3 pt-10 sm:px-4 sm:pb-4 sm:pt-12">
-                      <span className="line-clamp-2 text-center text-sm font-semibold text-white">
-                        {item.name}
-                      </span>
-                    </figcaption>
-                  </figure>
+          {restaurantCards.map((item, i) => (
+            <SwiperSlide key={`${item.name}-${i}`} className="!flex justify-center !bg-transparent">
+              <div className="flex w-full max-w-[320px] flex-col overflow-hidden rounded-xl border border-border/90 shadow-xl">
+                <div className="relative aspect-[4/3] w-full min-h-[180px] bg-zinc-900">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    className="object-cover object-center"
+                    sizes="(max-width: 1023px) 92vw, 320px"
+                    unoptimized
+                  />
                 </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+                <div className="bg-card px-3 py-3">
+                  <p className="text-center text-sm font-semibold leading-snug text-foreground">{item.name}</p>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
-
-      <p className="mt-2 text-center text-xs text-muted-foreground">
-        {SLIDE_COUNT} venues—drag or use arrows; focus moves along the row automatically.
-      </p>
 
       <div className="mt-6 flex justify-center gap-10">
         <button
           type="button"
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-sm transition hover:bg-muted"
           aria-label="Previous restaurant"
-          onClick={() => api?.scrollPrev()}
+          onClick={() => swiperRef.current?.slidePrev()}
         >
           <ChevronLeft className="h-5 w-5" aria-hidden />
         </button>
@@ -238,7 +172,7 @@ function RestaurantPartnersCarousel() {
           type="button"
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-sm transition hover:bg-muted"
           aria-label="Next restaurant"
-          onClick={() => api?.scrollNext()}
+          onClick={() => swiperRef.current?.slideNext()}
         >
           <ChevronRight className="h-5 w-5" aria-hidden />
         </button>

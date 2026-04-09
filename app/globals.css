@@ -178,19 +178,14 @@
   background: rgba(100, 100, 100, 0.5);
 }
 
-.clients-carousel-wrapper > div {
-  display: flex;
-  gap: 1.5rem;
-  width: max-content;
-  padding-right: 1rem;
+/* Swiper coverflow (digirestro.ai-style): slides size to card content; center row vertically. */
+.partners-swiper .swiper-slide {
+  height: auto;
+  box-sizing: border-box;
 }
 
-.clients-carousel-wrapper figure {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.clients-carousel-wrapper figure:hover {
-  transform: translateY(-4px);
+.partners-swiper .swiper-wrapper {
+  align-items: center;
 }
 
 @media (prefers-reduced-motion: reduce) {
