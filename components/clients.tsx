@@ -93,7 +93,6 @@ function RestaurantMarquee() {
     loop: true,
     align: "center",
     slidesToScroll: 1,
-    duration: 50,
   })
   const [selectedIndex, setSelectedIndex] = useState(0)
   const slideRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -101,60 +100,57 @@ function RestaurantMarquee() {
   useEffect(() => {
     if (!emblaApi) return
 
-    const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap())
-    }
-
-    emblaApi.on("select", onSelect)
-    emblaApi.on("reInit", onSelect)
-
-    return () => {
-      emblaApi.off("select", onSelect)
-      emblaApi.off("reInit", onSelect)
-    }
-  }, [emblaApi])
-
-  useEffect(() => {
-    if (!emblaApi) return
-
     const updateScales = () => {
       const slides = slideRefs.current
+      const selectedSnap = emblaApi.selectedScrollSnap()
+      setSelectedIndex(selectedSnap)
+
       slides.forEach((slide, index) => {
         if (!slide) return
-        const distance = Math.abs(index - selectedIndex)
+        
+        // Calculate distance from selected slide
+        const distance = Math.abs(index - selectedSnap)
         
         let scale = 1
-        let opacity = 1
+        let zIndex = 0
         
         if (distance === 0) {
-          scale = 1.1
-          opacity = 1
+          // Center item - largest
+          scale = 1.15
+          zIndex = 30
         } else if (distance === 1) {
-          scale = 0.95
-          opacity = 0.9
-        } else if (distance === 2) {
+          // One step away
           scale = 0.85
-          opacity = 0.7
+          zIndex = 20
+        } else if (distance === 2) {
+          // Two steps away
+          scale = 0.65
+          zIndex = 10
+        } else if (distance === 3) {
+          // Three steps away
+          scale = 0.5
+          zIndex = 5
         } else {
-          scale = 0.75
-          opacity = 0.5
+          // Further away
+          scale = 0.4
+          zIndex = 0
         }
         
         slide.style.transform = `scale(${scale})`
-        slide.style.opacity = `${opacity}`
-        slide.style.transition = "transform 0.3s ease-out, opacity 0.3s ease-out"
+        slide.style.zIndex = `${zIndex}`
+        slide.style.transition = "transform 0.4s cubic-bezier(0.33, 0.66, 0.66, 1), z-index 0.4s ease-out"
       })
     }
 
-    updateScales()
     emblaApi.on("select", updateScales)
-    emblaApi.on("settle", updateScales)
+    emblaApi.on("reInit", updateScales)
+    updateScales()
 
     return () => {
       emblaApi.off("select", updateScales)
-      emblaApi.off("settle", updateScales)
+      emblaApi.off("reInit", updateScales)
     }
-  }, [emblaApi, selectedIndex])
+  }, [emblaApi])
 
   // Auto-scroll every 4 seconds
   useEffect(() => {
@@ -168,29 +164,31 @@ function RestaurantMarquee() {
   }, [emblaApi])
 
   return (
-    <div className="clients-carousel-wrap relative overflow-hidden py-8" ref={emblaRef}>
-      <div className="flex gap-4">
-        {restaurantCards.map((item, i) => (
-          <figure
-            key={`${item.name}-${i}`}
-            ref={(el) => {
-              slideRefs.current[i] = el
-            }}
-            className="relative h-36 w-[220px] shrink-0 overflow-hidden rounded-xl border border-border bg-card shadow-sm sm:h-40 sm:w-[260px] cursor-grab active:cursor-grabbing"
-          >
-            <Image
-              src={item.image}
-              alt={item.name}
-              fill
-              className="object-cover"
-              sizes="260px"
-              unoptimized
-            />
-            <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent px-3 pb-3 pt-10">
-              <span className="line-clamp-2 text-sm font-semibold text-white">{item.name}</span>
-            </figcaption>
-          </figure>
-        ))}
+    <div className="clients-carousel-wrapper relative w-full">
+      <div className="clients-carousel-container overflow-hidden" ref={emblaRef}>
+        <div className="flex gap-6 py-12 px-4 justify-center">
+          {restaurantCards.map((item, i) => (
+            <figure
+              key={`${item.name}-${i}`}
+              ref={(el) => {
+                slideRefs.current[i] = el
+              }}
+              className="relative h-40 w-[280px] shrink-0 overflow-hidden rounded-xl border border-border bg-card shadow-lg cursor-grab active:cursor-grabbing origin-center"
+            >
+              <Image
+                src={item.image}
+                alt={item.name}
+                fill
+                className="object-cover"
+                sizes="280px"
+                unoptimized
+              />
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent px-4 pb-4 pt-12">
+                <span className="line-clamp-2 text-sm font-semibold text-white">{item.name}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
     </div>
   )
