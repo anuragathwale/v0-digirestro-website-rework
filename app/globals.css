@@ -154,26 +154,27 @@
   animation-play-state: paused;
 }
 
-.clients-carousel-wrap {
+.clients-carousel-wrapper {
   position: relative;
-  overflow: visible;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  perspective: 1000px;
+  width: 100%;
+  overflow: hidden;
 }
 
-.clients-carousel-wrap > div {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  perspective: 1000px;
+.clients-carousel-container {
+  overflow: hidden;
+  width: 100%;
 }
 
-.clients-carousel-wrap figure {
+.clients-carousel-container > div {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.clients-carousel-container figure {
   transform-origin: center;
-  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  transition: transform 0.4s cubic-bezier(0.33, 0.66, 0.66, 1), z-index 0.4s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
