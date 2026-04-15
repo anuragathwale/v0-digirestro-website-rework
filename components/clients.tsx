@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { CreditCard, ChevronLeft, ChevronRight, Network } from "lucide-react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useRef } from "react"
 import type { Swiper as SwiperClass } from "swiper"
 import { Autoplay, EffectCoverflow } from "swiper/modules"
@@ -71,8 +71,20 @@ const clients = [
 
 const SI = "https://cdn.jsdelivr.net/npm/simple-icons@11.4.0/icons"
 
-/** Logos via Simple Icons (jsDelivr). */
-const integrationPartners: { name: string; logoUrl?: string }[] = [
+/** DuckDuckGo-hosted favicons — small marks when Simple Icons has no slug in v11. */
+function fav(domain: string) {
+  return `https://icons.duckduckgo.com/ip3/${domain}.ico`
+}
+
+/**
+ * Order matches stakeholder list. Logos: Simple Icons (SVG) where available,
+ * else site favicons / official assets for crisp small marks.
+ */
+const integrationPartners: { name: string; logoUrl: string }[] = [
+  { name: "Xplorpay", logoUrl: fav("xplorpay.com") },
+  { name: "Paymob", logoUrl: fav("paymob.com") },
+  { name: "Azure AI", logoUrl: `${SI}/microsoftazure.svg` },
+  { name: "Infobip", logoUrl: fav("infobip.com") },
   { name: "Zomato", logoUrl: `${SI}/zomato.svg` },
   { name: "Swiggy", logoUrl: `${SI}/swiggy.svg` },
   { name: "Paytm", logoUrl: `${SI}/paytm.svg` },
@@ -80,12 +92,23 @@ const integrationPartners: { name: string; logoUrl?: string }[] = [
   { name: "Microsoft", logoUrl: `${SI}/microsoft.svg` },
   { name: "Visa", logoUrl: `${SI}/visa.svg` },
   { name: "Mastercard", logoUrl: `${SI}/mastercard.svg` },
-  { name: "Fiserv", logoUrl: `${SI}/fiserv.svg` },
-  { name: "Diliverect", logoUrl: "https://www.deliverect.com/images/deliverect_logo_white.svg" },
-  { name: "Lalamove", logoUrl: "https://van-static.lalamove.com/llm-user-web/885125/assets/logo-4e75aa7b.svg" },
+  { name: "Fiserv", logoUrl: fav("fiserv.com") },
+  { name: "Deliverect", logoUrl: fav("deliverect.com") },
+  { name: "Lalamove", logoUrl: fav("lalamove.com") },
   { name: "DoorDash", logoUrl: `${SI}/doordash.svg` },
   { name: "Uber Eats", logoUrl: `${SI}/ubereats.svg` },
-  { name: "Urban Piper" },
+  { name: "Urban Piper", logoUrl: fav("www.urbanpiper.com") },
+  { name: "ONDC", logoUrl: fav("ondc.org") },
+  { name: "Avalara", logoUrl: fav("avalara.com") },
+  { name: "Foodpanda Singapore", logoUrl: `${SI}/foodpanda.svg` },
+  { name: "Grubtech", logoUrl: fav("grubtech.com") },
+  { name: "Stripe", logoUrl: `${SI}/stripe.svg` },
+  { name: "Razorpay", logoUrl: `${SI}/razorpay.svg` },
+  {
+    name: "Ecomnext",
+    logoUrl: "https://ecomnext.com/wp-content/uploads/2021/10/LOGO-WEBSITE.png",
+  },
+  { name: "Xirify", logoUrl: fav("www.xirify.com") },
 ]
 
 const restaurantCards = clients.map((name, i) => ({
@@ -204,37 +227,27 @@ export function Clients() {
           Trusted partners &amp; integrations
         </p>
 
-        <div className="mb-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-8 px-2">
+        <div className="mb-14 flex flex-wrap items-start justify-center gap-x-6 gap-y-6 px-2 sm:gap-x-8 sm:gap-y-7">
           {integrationPartners.map((p) => (
             <div
               key={p.name}
-              className="flex h-14 w-[100px] flex-col items-center justify-center gap-1 sm:h-16 sm:w-[120px]"
+              className="flex w-[88px] flex-col items-center justify-start gap-1.5 sm:w-[100px]"
             >
-              {p.logoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element -- remote SVG brand marks
-                <img
-                  src={p.logoUrl}
-                  alt=""
-                  width={48}
-                  height={48}
-                  className="h-10 w-10 object-contain opacity-90 grayscale transition hover:grayscale-0 sm:h-12 sm:w-12"
-                />
-              ) : (
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card sm:h-12 sm:w-12">
-                  <CreditCard className="h-6 w-6 text-primary" aria-hidden />
-                </div>
-              )}
-              <span className="text-center text-[10px] font-medium text-muted-foreground sm:text-xs">
+              {/* eslint-disable-next-line @next/next/no-img-element -- remote brand marks (SVG/ICO/PNG) */}
+              <img
+                src={p.logoUrl}
+                alt={`${p.name} logo`}
+                width={40}
+                height={40}
+                loading="lazy"
+                decoding="async"
+                className="h-8 w-8 object-contain opacity-90 grayscale transition hover:grayscale-0 sm:h-9 sm:w-9"
+              />
+              <span className="line-clamp-2 min-h-[2rem] text-center text-[9px] font-medium leading-tight text-muted-foreground sm:min-h-[2.25rem] sm:text-[10px]">
                 {p.name}
               </span>
             </div>
           ))}
-          <div className="flex h-14 w-[100px] flex-col items-center justify-center gap-1 sm:h-16 sm:w-[120px]">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card sm:h-12 sm:w-12">
-              <Network className="h-6 w-6 text-primary" aria-hidden />
-            </div>
-            <span className="text-center text-[10px] font-medium text-muted-foreground sm:text-xs">ONDC</span>
-          </div>
         </div>
 
       </div>
