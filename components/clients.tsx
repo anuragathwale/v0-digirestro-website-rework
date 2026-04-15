@@ -92,7 +92,7 @@ const integrationPartners: { name: string; logoUrl: string }[] = [
   { name: "Microsoft", logoUrl: `${SI}/microsoft.svg` },
   { name: "Visa", logoUrl: `${SI}/visa.svg` },
   { name: "Mastercard", logoUrl: `${SI}/mastercard.svg` },
-  { name: "Fiserv", logoUrl: fav("fiserv.com") },
+  { name: "Fiserv", logoUrl: "/images/partners/fiserv.svg" },
   { name: "Deliverect", logoUrl: fav("deliverect.com") },
   { name: "Lalamove", logoUrl: fav("lalamove.com") },
   { name: "DoorDash", logoUrl: `${SI}/doordash.svg` },
@@ -104,10 +104,7 @@ const integrationPartners: { name: string; logoUrl: string }[] = [
   { name: "Grubtech", logoUrl: fav("grubtech.com") },
   { name: "Stripe", logoUrl: `${SI}/stripe.svg` },
   { name: "Razorpay", logoUrl: `${SI}/razorpay.svg` },
-  {
-    name: "Ecomnext",
-    logoUrl: "https://ecomnext.com/wp-content/uploads/2021/10/LOGO-WEBSITE.png",
-  },
+  { name: "Ecomnext", logoUrl: "/images/partners/ecomnext.svg" },
   { name: "Xirify", logoUrl: fav("www.xirify.com") },
 ]
 
@@ -231,17 +228,17 @@ export function Clients() {
           {integrationPartners.map((p) => (
             <div
               key={p.name}
-              className="flex w-[88px] flex-col items-center justify-start gap-1.5 sm:w-[100px]"
+              className="flex w-[92px] flex-col items-center justify-start gap-1.5 sm:w-[105px]"
             >
               {/* eslint-disable-next-line @next/next/no-img-element -- remote brand marks (SVG/ICO/PNG) */}
               <img
                 src={p.logoUrl}
                 alt={`${p.name} logo`}
-                width={40}
-                height={40}
+                width={42}
+                height={42}
                 loading="lazy"
                 decoding="async"
-                className="h-8 w-8 object-contain opacity-90 grayscale transition hover:grayscale-0 sm:h-9 sm:w-9"
+                className="h-[2.1rem] w-[2.1rem] object-contain opacity-90 grayscale transition hover:grayscale-0 sm:h-[2.3625rem] sm:w-[2.3625rem]"
               />
               <span className="line-clamp-2 min-h-[2rem] text-center text-[9px] font-medium leading-tight text-muted-foreground sm:min-h-[2.25rem] sm:text-[10px]">
                 {p.name}
