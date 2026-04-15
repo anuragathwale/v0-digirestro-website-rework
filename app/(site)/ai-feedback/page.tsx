@@ -1,51 +1,54 @@
-import Image from "next/image"
+import { ProductPageLayout } from "@/components/product-page-layout"
 
 export default function AiFeedbackPage() {
   return (
-    <div className="bg-background">
-      <section className="border-b border-border bg-muted/25 px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight text-foreground text-balance sm:text-4xl lg:text-5xl">
-            AI Feedback
-          </h1>
-          <p className="mt-5 text-lg text-muted-foreground text-pretty">
-            Signals and suggestions to refine operations, menus, and guest experience.
-          </p>
-        </div>
-      </section>
-
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
-          <div className="prose prose-lg mx-auto">
-            <p>
-              AI powered feedback system for restaurants.
-            </p>
-
-            <h2>Key Features</h2>
-            <ul>
-              <li><strong>Easy Management:</strong> Manage one product catalogue and sync inventory so it's available for online and inperson selling</li>
-              <li><strong>Staff Management:</strong> Create staff login PINs and assign specific rights to secure access</li>
-              <li><strong>Sales Analysis:</strong> Check the sales analysis on your mobile/tablet and adapt to growing trends in your business with unified analytics</li>
-            </ul>
-
-            <h2>Testimonials</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="rounded-lg border p-4">
-                <p>"Would definitely recommend it as it is very easy. The staff is very calm and the features are understandable. The support team easily handles and solves minor issues. Discount and Customer Details features are good."</p>
-                <p className="mt-2 font-semibold">- Manish Patel, LEO'S CAFE</p>
-              </div>
-              <div className="rounded-lg border p-4">
-                <p>"It is very user-friendly, and there is no delay in support. I'll use the loyalty program soon. Also, the order taking & billing process is effortless"</p>
-                <p className="mt-2 font-semibold">- Aman Singh, Renaissance Grand Restaurant</p>
-              </div>
-              <div className="rounded-lg border p-4">
-                <p>"It is very user-friendly, and there is no delay in support. I'll use the loyalty program soon. Also, the order taking & billing process is effortless"</p>
-                <p className="mt-2 font-semibold">- Mr. Neeraj, LAAPASO</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    <ProductPageLayout
+      variant="review"
+      showAdminControl={false}
+      eyebrow="Review Lens"
+      title="Review Lens — AI-powered feedback & reputation"
+      lead="Manage, analyze, and respond to reviews from one place—with AI that turns feedback into action."
+      heroImage={{
+        src: "/images/suite/review_lens.png",
+        alt: "Review Lens dashboard for sentiment, replies, and reputation monitoring",
+        priority: true,
+      }}
+      introParagraphs={[
+        "Guest sentiment shows up across Google, social channels, and your website. Review Lens brings it together so you see patterns early, reply faster, and protect the reputation you have worked to build.",
+        "Use AI to classify tone, suggest responses, and focus the team on what will actually move ratings and repeat visits—not just on clearing an inbox.",
+      ]}
+      keyFeatureCards={[
+        {
+          title: "AI-driven sentiment analysis",
+          description:
+            "Automatically classify reviews and surface trends in language and tone—so you spot problems before they become a narrative.",
+        },
+        {
+          title: "Multi-platform integration",
+          description:
+            "Aggregate feedback from major review sources into one dashboard for a single operational view.",
+        },
+        {
+          title: "Automated customized replies",
+          description:
+            "Generate personalized response drafts so managers spend less time wording and more time fixing root causes.",
+        },
+        {
+          title: "Negative review management",
+          description:
+            "Workflows and tooling focused on resolving issues early and keeping your public presence accurate and fair.",
+        },
+        {
+          title: "Reputation score & health",
+          description:
+            "Track how your brand is perceived over time with scores and signals that map to guest satisfaction.",
+        },
+        {
+          title: "Interactive review widget",
+          description:
+            "Collect reviews on your own site to grow first-party feedback alongside third-party platforms.",
+        },
+      ]}
+    />
   )
 }

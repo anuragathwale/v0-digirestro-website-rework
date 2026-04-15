@@ -1,51 +1,55 @@
-import Image from "next/image"
+import { ProductPageLayout } from "@/components/product-page-layout"
 
 export default function KdsPage() {
   return (
-    <div className="bg-background">
-      <section className="border-b border-border bg-muted/25 px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight text-foreground text-balance sm:text-4xl lg:text-5xl">
-            KDS – Kitchen Display System
-          </h1>
-          <p className="mt-5 text-lg text-muted-foreground text-pretty">
-            Colour coded tickets, prep states, and handoff from kitchen to the pass.
-          </p>
-        </div>
-      </section>
-
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
-          <div className="prose prose-lg mx-auto">
-            <p>
-              Kitchen Display System for efficient order management in restaurants.
-            </p>
-
-            <h2>Key Features</h2>
-            <ul>
-              <li><strong>Easy Management:</strong> Manage one product catalogue and sync inventory so it's available for online and in person selling</li>
-              <li><strong>Staff Management:</strong> Create staff login PINs and assign specific rights to secure access</li>
-              <li><strong>Sales Analysis:</strong> Check the sales analysis on your mobile/tablet and adapt to growing trends in your business with unified analytics</li>
-            </ul>
-
-            <h2>Testimonials</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="rounded-lg border p-4">
-                <p>"Would definitely recommend it as it is very easy. The staff is very calm and the features are understandable. The support team easily handles and solves minor issues. Discount and Customer Details features are good."</p>
-                <p className="mt-2 font-semibold">- Manish Patel, LEO'S CAFE</p>
-              </div>
-              <div className="rounded-lg border p-4">
-                <p>"It is very user-friendly, and there is no delay in support. I'll use the loyalty program soon. Also, the order taking & billing process is effortless"</p>
-                <p className="mt-2 font-semibold">- Aman Singh, Renaissance Grand Restaurant</p>
-              </div>
-              <div className="rounded-lg border p-4">
-                <p>"It is very user-friendly, and there is no delay in support. I'll use the loyalty program soon. Also, the order taking & billing process is effortless"</p>
-                <p className="mt-2 font-semibold">- Mr. Neeraj, LAAPASO</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    <ProductPageLayout
+      variant="article"
+      showAdminControl={false}
+      eyebrow="Kitchen display"
+      title="KDS — Kitchen Display System"
+      lead="One screen for every ticket—clear modifiers, color-coded urgency, and fewer missed orders."
+      heroImage={{
+        src: "/images/suite/kds.png",
+        alt: "DigiRestro Kitchen Display System with color-coded orders",
+        priority: true,
+      }}
+      introParagraphs={[
+        "Paper KOTs and kitchen printers carry recurring cost—and paper can be lost or damaged in a busy kitchen. A Kitchen Display System (KDS) is a one-time screen investment that cuts roll costs and reduces human error.",
+        "Unlike a silent printer, KDS can alert the line when a new order hits, so nothing gets missed in the noise of service.",
+      ]}
+      articleSections={[
+        {
+          heading: "Why KDS?",
+          paragraphs: [
+            "Traditional printers and paper tickets add up over time and still leave room for mistakes when a slip goes missing. KDS centralizes what the kitchen must cook next, with less physical clutter on the pass.",
+          ],
+        },
+        {
+          heading: "Consolidated screen for all your KOTs",
+          paragraphs: [
+            "Running and past orders from DigiRestro POS appear on one kitchen display as clear tickets with items and quantities. Mark items or orders ready from the same screen so service and expo know what is live.",
+          ],
+        },
+        {
+          heading: "Improved order accuracy",
+          paragraphs: [
+            "Modifiers, dish-level notes, and order-level instructions stay visible to the line so dishes match what the guest asked for.",
+            "Tickets stay on screen until the kitchen marks them prepared—so nothing disappears until it is actually done.",
+          ],
+        },
+        {
+          heading: "Increase efficiency",
+          paragraphs: [
+            "Configure time-based color coding so tickets change appearance as they age. Set prep-time expectations to match your menu so chefs can spot delays and prioritize what needs attention first.",
+          ],
+        },
+        {
+          heading: "Data tracking",
+          paragraphs: [
+            "Kitchen operations generate useful signals: average preparation time, how many orders finish within target, and how many run late. Export KDS activity into reports to coach the line and refine recipes and staffing.",
+          ],
+        },
+      ]}
+    />
   )
 }
