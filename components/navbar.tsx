@@ -18,7 +18,7 @@ export function Navbar() {
           <div className="flex flex-shrink-0 flex-col gap-0.5">
             <BrandLogo variant="light" className="text-xl sm:text-2xl" />
             <span className="hidden pl-0.5 text-[10px] font-medium uppercase tracking-[0.12em] text-[#888] sm:block sm:text-[11px]">
-              Restaurant POS
+              Restaurant Technology partner
             </span>
           </div>
 
