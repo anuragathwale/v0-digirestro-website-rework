@@ -6,7 +6,6 @@ interface ContactFormData {
   mobile: string
   email: string
   business: string
-  city: string
 }
 
 const MAX_LEN = 500
@@ -32,11 +31,10 @@ export async function POST(request: Request) {
       mobile: sanitizeField(raw.mobile),
       email: sanitizeField(raw.email),
       business: sanitizeField(raw.business),
-      city: sanitizeField(raw.city),
     }
 
-    if (!data.name || !data.mobile || !data.email || !data.business || !data.city) {
-      return NextResponse.json({ error: "All fields are required" }, { status: 400 })
+    if (!data.name || !data.email) {
+      return NextResponse.json({ error: "Name and email are required" }, { status: 400 })
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -60,15 +58,19 @@ export async function POST(request: Request) {
     const from =
       process.env.RESEND_FROM ?? "Digirestro Website <onboarding@resend.dev>"
 
+    const displayOptional = (v: string) => (v ? escapeHtml(v) : "—")
+
     const safe = {
       name: escapeHtml(data.name),
-      mobile: escapeHtml(data.mobile),
+      mobile: displayOptional(data.mobile),
       email: escapeHtml(data.email),
-      business: escapeHtml(data.business),
-      city: escapeHtml(data.city),
+      business: displayOptional(data.business),
     }
 
-    const subject = `Website contact: ${data.business} (${data.city})`
+    const subject =
+      data.business.length > 0
+        ? `Website contact: ${data.name} — ${data.business}`
+        : `Website contact: ${data.name}`
 
     const html = `
 <!DOCTYPE html>
@@ -79,7 +81,6 @@ export async function POST(request: Request) {
   <p style="margin: 0 0 8px;"><strong>Mobile</strong><br/>${safe.mobile}</p>
   <p style="margin: 0 0 8px;"><strong>Email</strong><br/><a href="mailto:${safe.email}">${safe.email}</a></p>
   <p style="margin: 0 0 8px;"><strong>Business</strong><br/>${safe.business}</p>
-  <p style="margin: 0 0 8px;"><strong>City</strong><br/>${safe.city}</p>
   <p style="margin: 16px 0 0; font-size: 12px; color: #666;">Submitted from the Digirestro website contact form.</p>
 </body>
 </html>
@@ -89,10 +90,9 @@ export async function POST(request: Request) {
       "New contact form submission",
       "",
       `Name: ${data.name}`,
-      `Mobile: ${data.mobile}`,
+      `Mobile: ${data.mobile || "—"}`,
       `Email: ${data.email}`,
-      `Business: ${data.business}`,
-      `City: ${data.city}`,
+      `Business: ${data.business || "—"}`,
       "",
       "Submitted from the Digirestro website contact form.",
     ].join("\n")

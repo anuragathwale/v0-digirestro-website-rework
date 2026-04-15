@@ -31,7 +31,6 @@ export function ContactForm({
       mobile: formData.get("mobile"),
       email: formData.get("email"),
       business: formData.get("business"),
-      city: formData.get("city"),
     }
 
     try {
@@ -89,16 +88,7 @@ export function ContactForm({
               </div>
             </div>
 
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center flex-shrink-0 border border-border">
-                <Clock className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h4 className="font-semibold text-foreground mb-1">Business Hours</h4>
-                <p className="text-muted-foreground">09:00 AM - 07:00 PM</p>
-              </div>
             </div>
-          </div>
 
           <div className="bg-card border border-border rounded-2xl p-8">
             {isSuccess ? (
@@ -125,9 +115,9 @@ export function ContactForm({
 
                 <div>
                   <label htmlFor="mobile" className="block text-sm font-medium text-foreground mb-2">
-                    Mobile Number *
+                    Mobile Number
                   </label>
-                  <Input id="mobile" name="mobile" type="tel" placeholder="Your phone number" required />
+                  <Input id="mobile" name="mobile" type="tel" placeholder="Your phone number" />
                 </div>
 
                 <div>
@@ -139,16 +129,9 @@ export function ContactForm({
 
                 <div>
                   <label htmlFor="business" className="block text-sm font-medium text-foreground mb-2">
-                    Business Name *
+                    Business Name
                   </label>
-                  <Input id="business" name="business" placeholder="Your restaurant/business name" required />
-                </div>
-
-                <div>
-                  <label htmlFor="city" className="block text-sm font-medium text-foreground mb-2">
-                    City Name *
-                  </label>
-                  <Input id="city" name="city" placeholder="Your city" required />
+                  <Input id="business" name="business" placeholder="Your restaurant/business name" />
                 </div>
 
                 {error && <p className="text-destructive text-sm">{error}</p>}
