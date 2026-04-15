@@ -21,7 +21,7 @@ const features: FeatureItem[] = [
     title: "Analytics & reporting",
     description:
       "Use sales history, inventory, and outlet data to spot trends, tighten costs, and make clearer day-to-day decisions.",
-    image: `${U}/photo-1460925895917-afdab827c52f?w=900&h=600&fit=crop&q=82`,
+    image: "/images/analytics.jpeg",
     alt: "Laptop showing charts and business analytics on a desk",
   },
   {
@@ -58,7 +58,7 @@ const features: FeatureItem[] = [
     title: "Inventory management",
     description:
       "Track stock in real time to cut waste and keep the kitchen and bar aligned with what actually sells.",
-    image: `${U}/photo-1542838132-92c53300491e?w=900&h=600&fit=crop&q=82`,
+    image: "/images/inventory-1.png",
     alt: "Fresh produce and ingredients in a market or kitchen context",
   },
 ]
