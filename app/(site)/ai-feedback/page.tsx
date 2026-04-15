@@ -18,12 +18,12 @@ export default function AiFeedbackPage() {
         <div className="mx-auto max-w-4xl">
           <div className="prose prose-lg mx-auto">
             <p>
-              AI-powered feedback system for restaurants.
+              AI powered feedback system for restaurants.
             </p>
 
             <h2>Key Features</h2>
             <ul>
-              <li><strong>Easy Management:</strong> Manage one product catalogue and sync inventory so it's available for online and in-person selling</li>
+              <li><strong>Easy Management:</strong> Manage one product catalogue and sync inventory so it's available for online and inperson selling</li>
               <li><strong>Staff Management:</strong> Create staff login PINs and assign specific rights to secure access</li>
               <li><strong>Sales Analysis:</strong> Check the sales analysis on your mobile/tablet and adapt to growing trends in your business with unified analytics</li>
             </ul>
