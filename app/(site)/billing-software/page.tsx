@@ -1,61 +1,76 @@
-import Image from "next/image"
+import { ProductPageLayout } from "@/components/product-page-layout"
 
 export default function BillingSoftwarePage() {
   return (
-    <div className="bg-background">
-      <section className="border-b border-border bg-muted/25 px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight text-foreground text-balance sm:text-4xl lg:text-5xl">
-            Billing POS
-          </h1>
-          <p className="mt-5 text-lg text-muted-foreground text-pretty">
-            Billing, tables, and checkout in one flow built for busy service.
-          </p>
-        </div>
-      </section>
-
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
-          <div className="prose prose-lg mx-auto">
-            <p>
-              We understand changing existing hardwares and making a hefty investment on buying new hardware can be expensive, but we got your back and our POS can be worked on any hardware and save cost for you.
-            </p>
-            <p>
-              Also, considering the most vital factor in your business which is billing, our POS is designed in a way that it can function seamlessly, even when your internet is down.
-            </p>
-            <p>
-              We store All data locally and syncs to the cloud once your connection is up and running.
-            </p>
-
-            <h2>Key Features</h2>
-            <ul>
-              <li><strong>Hardware & Internet Independent:</strong> Works on any hardware and functions offline</li>
-              <li><strong>Easy to navigate billing Screen:</strong> Self explanatory and simple to learn</li>
-              <li><strong>Customize your billing flow:</strong> Keep only required features for operations</li>
-              <li><strong>Sectionwise Pricing & KOT Printings:</strong> Different prices for sections and automatic KOT routing</li>
-              <li><strong>Integration for all 3rd party order aggregators:</strong> Manage online orders on POS</li>
-              <li><strong>Multi User & Multi Terminal Billing:</strong> Run multiple terminals with offline sync</li>
-              <li><strong>Customisable reports formats:</strong> Customize reports with required data</li>
-            </ul>
-
-            <h2>Testimonials</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="rounded-lg border p-4">
-                <p>"Would definitely recommend it as it is very easy. The staff is very calm and the features are understandable. The support team easily handles and solves minor issues. Discount and Customer Details features are good."</p>
-                <p className="mt-2 font-semibold">- Manish Patel, LEO'S CAFE</p>
-              </div>
-              <div className="rounded-lg border p-4">
-                <p>"It is very user-friendly, and there is no delay in support. I'll use the loyalty program soon. Also, the order taking & billing process is effortless"</p>
-                <p className="mt-2 font-semibold">- Aman Singh, Renaissance Grand Restaurant</p>
-              </div>
-              <div className="rounded-lg border p-4">
-                <p>"It is very user-friendly, and there is no delay in support. I'll use the loyalty program soon. Also, the order taking & billing process is effortless"</p>
-                <p className="mt-2 font-semibold">- Mr. Neeraj, LAAPASO</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    <ProductPageLayout
+      variant="article"
+      showAdminControl={false}
+      eyebrow="POS & billing"
+      title="Billing software — the one-stop platform you need to thrive"
+      lead="Hardware-flexible, offline-capable billing built for real restaurant floors."
+      heroImage={{
+        src: "/images/suite/billing-pos.png",
+        alt: "DigiRestro POS billing screen with items, taxes, and checkout",
+        priority: true,
+      }}
+      introParagraphs={[
+        "Changing hardware overnight is expensive. DigiRestro POS runs on the devices you already own so you can invest in guest experience—not another mandatory terminal refresh.",
+        "Billing is the heartbeat of your business: our POS keeps ringing sales even when the internet drops. Data is stored locally and syncs to the cloud when connectivity returns.",
+      ]}
+      articleSections={[
+        {
+          heading: "Hardware & internet independent",
+          paragraphs: [
+            "We understand that replacing hardware and buying new kit can be costly. DigiRestro POS works across a wide range of hardware so you can save capital while still getting a fast, reliable billing experience.",
+            "When connectivity is unreliable, billing should not stop. The POS is designed to keep serving checks offline, then sync when your line is back—without you managing duplicate entries by hand.",
+          ],
+        },
+        {
+          heading: "Easy to navigate billing screen",
+          paragraphs: [
+            "The billing screen is engineered for everyday operators: self-explanatory flows, fewer taps for common tasks, and faster training for new staff.",
+            "That means quicker adoption on the floor, less supervisor time on corrections, and a smoother experience during rush hours.",
+          ],
+        },
+        {
+          heading: "Customize your billing flow",
+          paragraphs: [
+            "Keep only the buttons and flows your operation needs. Hide clutter so billers stay focused on speed—whether you run QSR, dine-in, or a mixed format.",
+          ],
+        },
+        {
+          heading: "Section-wise pricing & KOT routing",
+          paragraphs: [
+            "Set different prices for the same item across sections or formats where your business needs it.",
+            "Operate multiple kitchens or cuisines without manually splitting tickets—KOTs route to the right station so prep stays organized.",
+          ],
+        },
+        {
+          heading: "Third-party order aggregators",
+          paragraphs: [
+            "Stop jumping between dashboards for Swiggy, Zomato, and other channels. Accept aggregator orders on the POS and align menu and inventory from one place so online and in-store stay consistent.",
+          ],
+        },
+        {
+          heading: "Multi-user & multi-terminal billing",
+          paragraphs: [
+            "Run several billing terminals—even across floors—with one license mindset: terminals stay in sync offline and bill numbers follow your sequence rules so finance stays clean at close.",
+          ],
+        },
+        {
+          heading: "Customisable report formats",
+          paragraphs: [
+            "Reports should answer your questions, not ours. Configure the fields you care about and schedule summaries to email after service so owners see the day in the shape that matches how they run the business.",
+          ],
+        },
+      ]}
+      uspBullets={[
+        "Future orders for cake and bakery shops.",
+        "Customizable bill formats.",
+        "Personalized e-bills for your customers.",
+        "Your customized UPI QR code on bill print.",
+        "Weight combos for sweet shops.",
+      ]}
+    />
   )
 }
