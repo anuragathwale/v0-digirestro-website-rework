@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Mail, Clock, Loader2, CheckCircle } from "lucide-react"
 
+import { SocialMediaLinks } from "@/components/social-media-links"
+
 type ContactFormProps = {
   heading?: string
   subheading?: string
@@ -88,10 +90,21 @@ export function ContactForm({
                     sales@digirestro.ai
                   </a>
                 </p>
+                <p className="mt-4 text-sm font-medium text-foreground">Follow us</p>
+                <SocialMediaLinks variant="contact" className="mt-2" />
               </div>
             </div>
 
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center flex-shrink-0 border border-border">
+                <Clock className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-foreground mb-1">Business Hours</h4>
+                <p className="text-muted-foreground">09:00 AM - 07:00 PM</p>
+              </div>
             </div>
+          </div>
 
           <div className="bg-card border border-border rounded-2xl p-8">
             {isSuccess ? (
