@@ -133,7 +133,7 @@ export function PlatformContent() {
               className="inline-flex rounded-lg px-8 py-3.5 text-base font-semibold text-white shadow-md transition hover:opacity-95"
               style={{ backgroundColor: red }}
             >
-              Book a demo
+              Book a Demo
             </Link>
             <Link
               href="/features"
@@ -215,54 +215,6 @@ export function PlatformContent() {
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:gap-14">
-          <div className="rounded-3xl border border-border bg-card p-8 sm:p-10">
-            <h2 className="font-[family-name:var(--font-display)] text-2xl font-bold text-foreground">DigiPay</h2>
-            <p className="mt-3 text-muted-foreground">
-              Payment processing built for busy counters: multiple methods, quick authorisations, encryption at every
-              step, and reporting that ties back to your books.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
-              <li className="flex gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-                Cards, wallets, and online payments in one flow
-              </li>
-              <li className="flex gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-                Integrates with inventory and accounting to cut manual entry
-              </li>
-              <li className="flex gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-                Scales from a single outlet to high-volume service
-              </li>
-            </ul>
-          </div>
-          <div className="rounded-3xl border border-border bg-card p-8 sm:p-10">
-            <h2 className="font-[family-name:var(--font-display)] text-2xl font-bold text-foreground">
-              Supply chain &amp; recipes
-            </h2>
-            <p className="mt-3 text-muted-foreground">
-              Track ingredients from supplier contracts to plate level recipes aligned with POS and finance for
-              clearer food cost and less waste.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
-              <li className="flex gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-                Recipe standardisation across locations
-              </li>
-              <li className="flex gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-                Expiry and batch visibility to reduce spoilage
-              </li>
-              <li className="flex gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-                Automatic inventory and COGS updates where integrated
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
 
       <section
         id="who-we-serve"

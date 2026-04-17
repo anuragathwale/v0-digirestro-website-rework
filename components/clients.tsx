@@ -210,7 +210,7 @@ export function Clients() {
             Restaurant teams in India and all over the world trust Digirestro.
           </h3>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Teams across many states in India and abroad rely on Digirestro—from neighbourhood favourites to busy chains.
+            Teams across many states in India and abroad rely on Digirestro from neighbourhood favourites to busy chains.
           </p>
         </div>
 
