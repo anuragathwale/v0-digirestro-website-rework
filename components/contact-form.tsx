@@ -77,7 +77,7 @@ export function ContactForm({
           <p className="mt-4 text-muted-foreground text-lg">{subheading}</p>
         </div>
 
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-12 max-w-6xl mx-auto lg:grid-cols-2">
           <div className="space-y-8">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center flex-shrink-0 border border-border">
