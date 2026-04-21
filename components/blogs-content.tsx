@@ -43,14 +43,13 @@ export function BlogsContent() {
           backgroundSize: "28px 28px",
         }}
       />
-      <div className="relative mx-auto max-w-[93.6rem]">
+      <div className="relative mx-auto max-w-6xl">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="mt-5 font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight text-foreground text-balance sm:text-4xl lg:text-5xl">
             The Digirestro journal
           </h1>
           <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
-            Guides on POS, kitchen tech, delivery, and calmer operations—all articles below open{" "}
-            <span className="font-medium text-foreground">on this site</span>.
+            Guides on POS, kitchen tech, delivery, and calmer operations
           </p>
         </div>
 
