@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { useRef, useState, useEffect, useMemo } from "react"
+import { useRef, useMemo, useSyncExternalStore } from "react"
 import type { Swiper as SwiperClass } from "swiper"
 import { Autoplay, EffectCoverflow } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -285,11 +285,14 @@ function detectCountry(): string {
 }
 
 function useCountryLabel() {
-  const [country, setCountry] = useState("")
-  useEffect(() => {
-    setCountry(detectCountry())
-  }, [])
-  return country
+  return useSyncExternalStore(
+    (onStoreChange) => {
+      queueMicrotask(onStoreChange)
+      return () => {}
+    },
+    detectCountry,
+    () => "",
+  )
 }
 
 export function Clients() {
