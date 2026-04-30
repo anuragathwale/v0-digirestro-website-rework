@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import type { Swiper as SwiperClass } from "swiper"
 import { Autoplay, EffectCoverflow } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -223,16 +223,65 @@ function RestaurantPartnersCarousel() {
   )
 }
 
+const TIMEZONE_COUNTRY: Record<string, string> = {
+  "Asia/Kolkata": "India",
+  "Asia/Calcutta": "India",
+  "Asia/Dubai": "UAE",
+  "Asia/Muscat": "Oman",
+  "Asia/Singapore": "Singapore",
+}
+
+const US_TIMEZONES = new Set([
+  "America/New_York", "America/Chicago", "America/Denver", "America/Los_Angeles",
+  "America/Anchorage", "America/Adak", "Pacific/Honolulu", "America/Phoenix",
+  "America/Boise", "America/Detroit", "America/Menominee", "America/Nome",
+  "America/Sitka", "America/Yakutat", "America/Juneau", "America/Metlakatla",
+  "US/Eastern", "US/Central", "US/Mountain", "US/Pacific", "US/Alaska", "US/Hawaii",
+])
+
+function detectCountry(): string {
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+    if (TIMEZONE_COUNTRY[tz]) return TIMEZONE_COUNTRY[tz]
+    if (
+      US_TIMEZONES.has(tz) ||
+      tz.startsWith("America/Indiana/") ||
+      tz.startsWith("America/Kentucky/") ||
+      tz.startsWith("America/North_Dakota/")
+    )
+      return "United States of America"
+  } catch {}
+  return ""
+}
+
+function useCountryLabel() {
+  const [country, setCountry] = useState("")
+  useEffect(() => {
+    setCountry(detectCountry())
+  }, [])
+  return country
+}
+
 export function Clients() {
+  const country = useCountryLabel()
+
+  const heading = country
+    ? `Restaurant teams in ${country} and all over the world trust Digirestro.`
+    : "Restaurant teams all over the world trust Digirestro."
+
+  const subheading = country
+    ? `Teams across ${country} and abroad rely on Digirestro — from neighbourhood favourites to busy chains.`
+    : "Teams worldwide rely on Digirestro — from neighbourhood favourites to busy chains."
+
   return (
     <section className="border-y border-border bg-muted/20 py-16 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 text-center lg:mx-auto lg:max-w-2xl">
           <h3 className="text-balance font-[family-name:var(--font-display)] text-xl font-semibold text-foreground sm:text-2xl">
-            Restaurant teams in India and all over the world trust Digirestro.
+            {heading}
           </h3>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Teams across many states in India and abroad rely on Digirestro from neighbourhood favourites to busy chains.
+            {subheading}
           </p>
         </div>
 
@@ -248,11 +297,11 @@ export function Clients() {
 
         <br />
         <br />
-        <div className="mb-14 flex flex-wrap items-start justify-center gap-x-6 gap-y-6 px-2 sm:gap-x-8 sm:gap-y-7">
+        <div className="mb-14 flex flex-wrap items-start justify-center gap-x-3 gap-y-4 px-2 sm:gap-x-8 sm:gap-y-7">
           {integrationPartners.map((p) => (
             <div
               key={p.name}
-              className="flex w-[92px] flex-col items-center justify-start gap-1.5 sm:w-[105px]"
+              className="flex w-[72px] flex-col items-center justify-start gap-1.5 sm:w-[105px]"
             >
               {/* eslint-disable-next-line @next/next/no-img-element -- remote brand marks (SVG/ICO/PNG) */}
               <img
@@ -262,9 +311,9 @@ export function Clients() {
                 height={54}
                 loading="lazy"
                 decoding="async"
-                className="h-[2.1rem] w-[2.1rem] object-contain opacity-90 grayscale transition hover:grayscale-0 sm:h-[2.3625rem] sm:w-[2.3625rem]"
+                className="h-[2.1rem] w-[2.1rem] object-contain sm:h-[2.3625rem] sm:w-[2.3625rem]"
               />
-              <span className="line-clamp-3 min-h-[3.25rem] text-center text-[15px] font-medium leading-tight text-muted-foreground sm:min-h-[3.25rem] sm:text-[15px]">
+              <span className="line-clamp-3 min-h-[3.25rem] text-center text-[13px] font-medium leading-tight text-muted-foreground sm:min-h-[3.25rem] sm:text-[15px]">
                 {p.name}
               </span>
             </div>
